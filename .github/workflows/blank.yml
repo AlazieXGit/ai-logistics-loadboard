@@ -35,4 +35,33 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
           VITE_GOOGLE_MAPS_API_KEY=your_actual_google_maps_api_key
-
+git clone https://github.com/placeholder/ai-logistics-loadboard.git
+cd ai-logistics-loadboard
+git remote rename origin upstream
+git remote add origin https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard.git
+git push -u origin main
+https://github.com/placeholder/ai-logistics-loadboard 
+https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard
+cd ..
+curl -L https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard/archive/refs/heads/main.zip -o ai-logistics-loadboard-main.zip
+https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard/archive/refs/heads/main.zip
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - docker.io
+  - docker-compose
+  - nginx
+runcmd:
+  - systemctl enable docker
+  - systemctl start docker
+  - usermod -aG docker ubuntu
+  - mkdir -p /app
+  - cd /app
+  - curl -L -o main.zip https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard/archive/refs/heads/main.zip
+  - apt-get install unzip -y
+  - unzip main.zip
+  - mv ai-logistics-loadboard-main/* /app
+  - docker-compose up -d
+  - cp nginx.conf /etc/nginx/sites-available/default
+  - systemctl restart nginx
