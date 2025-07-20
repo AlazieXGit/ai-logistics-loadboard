@@ -1,67 +1,39 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-          VITE_GOOGLE_MAPS_API_KEY=your_actual_google_maps_api_key
-git clone https://github.com/placeholder/ai-logistics-loadboard.git
-cd ai-logistics-loadboard
-git remote rename origin upstream
-git remote add origin https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard.git
-git push -u origin main
-https://github.com/placeholder/ai-logistics-loadboard 
-https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard
-cd ..
-curl -L https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard/archive/refs/heads/main.zip -o ai-logistics-loadboard-main.zip
-https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard/archive/refs/heads/main.zip
-#cloud-config
-package_update: true
-package_upgrade: true
-packages:
-  - docker.io
-  - docker-compose
-  - nginx
-runcmd:
-  - systemctl enable docker
-  - systemctl start docker
-  - usermod -aG docker ubuntu
-  - mkdir -p /app
-  - cd /app
-  - curl -L -o main.zip https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard/archive/refs/heads/main.zip
-  - apt-get install unzip -y
-  - unzip main.zip
-  - mv ai-logistics-loadboard-main/* /app
-  - docker-compose up -d
-  - cp nginx.conf /etc/nginx/sites-available/default
-  - systemctl restart nginx
+          export VITE_GOOGLE_MAPS_API_KEY=your_actual_google_maps_api_key
+          
+          git clone https://github.com/placeholder/ai-logistics-loadboard.git
+          cd ai-logistics-loadboard
+          git remote rename origin upstream
+          git remote add origin https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard.git
+          git push -u origin main
+          cd ..
+          
+          curl -L https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard/archive/refs/heads/main.zip -o ai-logistics-loadboard-main.zip
+          
+          # Install required packages
+          sudo apt-get update
+          sudo apt-get install -y docker.io docker-compose nginx unzip
+
+          sudo systemctl enable docker
+          sudo systemctl start docker
+          sudo usermod -aG docker $USER
+
+          sudo mkdir -p /app
+          cd /app
+          curl -L -o main.zip https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard/archive/refs/heads/main.zip
+          unzip main.zip
+          mv ai-logistics-loadboard-main/* /app
+
+          sudo docker-compose up -d
+          sudo cp nginx.conf /etc/nginx/sites-available/default
+          sudo systemctl restart nginx
+
+          # Reference URLs (not executed)
+          echo "Repo: https://github.com/placeholder/ai-logistics-loadboard"
+          echo "Your fork: https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard"
+          echo "Zip: https://github.com/YOUR_GITHUB_USERNAME/ai-logistics-loadboard/archive/refs/heads/main.zip"
+
+
